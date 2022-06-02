@@ -75,7 +75,10 @@
 
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <span>John Doe</span>
+                                       
+                                        	<c:if test="${ !empty sessionScope.email && !empty sessionScope.nom }">
+                                        		 <span>${ sessionScope.nom }</span>
+                                        	</c:if>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
@@ -96,7 +99,7 @@
                                         </a>
                                         </li>
                                         <li>
-                                            <a href="auth-sign-in-social.html">
+                                            <a href="?action=deconnexion">
                                             <i class="feather icon-log-out"></i> Quitter
                                         </a>
                                         </li>
