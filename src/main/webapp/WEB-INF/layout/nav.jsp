@@ -18,6 +18,7 @@
 			<%@ include file="../assets/inc/icon/feather/css/feather.css" %>
 			<%@ include file="../assets/inc/icon/font-awesome/css/font-awesome.min.css" %>
 			<%@ include file="../assets/bower_components/chartist/css/chartist.css" %>
+			<%@ include file="../assets/bower_components/select2/css/select2.min.css" %>
 			<%@ include file="../assets/inc/css/style.css" %>
 			<%@ include file="../assets/inc/css/widget.css" %>
 			<%@ include file="../assets/inc/css/pages.css" %>
