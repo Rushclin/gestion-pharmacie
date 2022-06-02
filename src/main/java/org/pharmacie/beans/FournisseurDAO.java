@@ -95,7 +95,8 @@ public class FournisseurDAO extends HttpServlet {
 		LocalDate dateEnregistrementFournisseur = LocalDate.now();
 		String INSERT_FOURRNISSEUR_SQL = "INSERT INTO fournisseur"
 				+ "  (nomFournisseur, adresseFournisseur, emailFournisseur, dateEnregistrementFournisseur) VALUES "
-				+ " ('" + nomFournisseur + "', '" + adresseFournisseur + "','" + emailFournisseur + "', '" + dateEnregistrementFournisseur + "');";
+				+ " ('" + nomFournisseur + "', '" + adresseFournisseur + "','" + emailFournisseur + "', '"
+				+ dateEnregistrementFournisseur + "');";
 		System.out.println(INSERT_FOURRNISSEUR_SQL);
 		// try-with-resource statement will auto close the connection.
 		try {
@@ -120,13 +121,12 @@ public class FournisseurDAO extends HttpServlet {
 		}
 	}
 
-	public static List<Fournisseur> searchContact(int idFournisseur) {
+	public static Fournisseur searchFournisseur(String idFournisseur) {
 		// TODO Auto-generated method stub
 		System.out.println("Recherche d'un fournisseur");
 		String SELECT_CONTACT_BY_ID = "SELECT idFournisseur, nomFournisseur, adresseFournisseur, emailFournisseur, dateEnregistrementFournisseur FROM fournisseur where idFournisseur = "
 				+ idFournisseur + ";";
-		// using try-with-resources to avoid closing resources (boiler plate code)
-		List<Fournisseur> fournisseurs = new ArrayList<>();
+		Fournisseur fournisseur = new Fournisseur();
 		// Step 1: Establishing a Connection
 		try {
 			Connection connection = getConnection();
@@ -141,24 +141,25 @@ public class FournisseurDAO extends HttpServlet {
 				String adresseFournisseur = rs1.getString("adresseFournisseur");
 				String emailFournisseur = rs1.getString("emailFournisseur");
 				String dateEnregistrementFournisseur = rs1.getString("dateEnregistrementFournisseur");
-				fournisseurs.add(new Fournisseur(idFournisseur1, nomFournisseur, adresseFournisseur, emailFournisseur,
-						dateEnregistrementFournisseur));
+				fournisseur = new Fournisseur(idFournisseur1, nomFournisseur, adresseFournisseur,
+						emailFournisseur, dateEnregistrementFournisseur);
 			}
 		} catch (SQLException e) {
 			System.out.print(e.getMessage());
 		}
-		return fournisseurs;
+		return fournisseur;
 
 	}
 
-	public static void updateFournisseur(int idFournisseur, String nomFournisseur, String adresseFournisseur,
-			String emailFournisseur, Date dateEnregistrementFournisseur) throws SQLException {
-		String UPDATE_FOURNISSEUR_SQL = "update contact set nomFournisseur ='" + nomFournisseur
+	public static void updateFournisseur(String idFournisseur, String nomFournisseur, String adresseFournisseur,
+			String emailFournisseur) throws SQLException {
+		String UPDATE_FOURNISSEUR_SQL = "UPDATE contact SET nomFournisseur ='" + nomFournisseur
 				+ "',adresseFournisseur= '" + adresseFournisseur + "', emailFournisseur = '" + emailFournisseur
-				+ "', dateEnregistrementFournisseur = '" + dateEnregistrementFournisseur + "' where idFournisseur = "
+				+ "' WHERE idFournisseur = "
 				+ idFournisseur + ";";
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FOURNISSEUR_SQL)) {
+		try {
+			Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FOURNISSEUR_SQL);
 			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {

@@ -67,13 +67,35 @@ public class ControllerServlet extends HttpServlet {
 				String adresseFournisseur = (String) request.getParameter("adresseFournisseur");
 				String emailFournisseur = (String) request.getParameter("emailFournisseur");
 				FournisseurDAO.createFournisseur(nomFournisseur, adresseFournisseur, emailFournisseur);
-				//rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
 			}
 			rd.forward(request, response);
-		} else if (action.equals("updateFournisseur")) {
-			ServletContext sc = getServletContext();
-			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateFournisseur.jsp");
-			rd.forward(request, response);
+		} else if (action.equals("searchFournisseur") || action.equals("updateFournisseur")) {
+			String idFournisseur = request.getParameter("idFournisseur");
+			if (action.equals("searchFournisseur")) {
+				System.out.println(action);
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateFournisseur.jsp");
+				try {
+					request.setAttribute("fournisseur", FournisseurDAO.searchFournisseur(idFournisseur));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			} else {
+				System.out.println(action);
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateFournisseur.jsp");
+				try {
+					String nomFournisseur = (String) request.getParameter("nomFournisseur");
+					String adresseFournisseur = (String) request.getParameter("adresseFournisseur");
+					String emailFournisseur = (String) request.getParameter("emailFournisseur");
+					FournisseurDAO.updateFournisseur(idFournisseur, nomFournisseur, adresseFournisseur, emailFournisseur);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			}
 		} else if (action.equals("deleteFournisseur")) {
 			ServletContext sc = getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
@@ -81,17 +103,17 @@ public class ControllerServlet extends HttpServlet {
 			System.out.println(idFournisseur);
 			try {
 				FournisseurDAO.deleteFournisseur(idFournisseur);
-			}catch (Exception e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 			rd.forward(request, response);
-		} //else {
-			 response.getWriter().append("Served at: ").append(request.getContextPath());
+		} // else {
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 
-			//ServletContext sc = getServletContext();
-			//RequestDispatcher rd = sc.getRequestDispatcher("/fournisseur.jsp");
-			//rd.forward(request, response);
-		//}
+		// ServletContext sc = getServletContext();
+		// RequestDispatcher rd = sc.getRequestDispatcher("/fournisseur.jsp");
+		// rd.forward(request, response);
+		// }
 	}
 
 	/**

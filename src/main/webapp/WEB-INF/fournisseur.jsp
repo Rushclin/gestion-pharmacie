@@ -80,7 +80,7 @@
 																<td>
 																	<div class="d-inline-block dropdown">
 																		<a
-																			href="<c:url value="/?action=updateFournisseur&idFournisseur=${ fournisseur.idFournisseur }"/>">
+																			href="<c:url value="/?action=searchFournisseur&idFournisseur=${ fournisseur.idFournisseur }"/>">
 																			<button type="button"
 																				class="btn-shadow btn btn-primary">
 																				<i class="fa fa-pen" aria-hidden="true"></i>

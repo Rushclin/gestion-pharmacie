@@ -46,7 +46,6 @@
 											<h4 class="sub-title">Modifier les champs du formulaire</h4>
 											
 											<form action="ControllerServlet" method="POST">
-												<input type="hidden" name="action" value="create" />
 												<div class="form-group row">
                                                     <label class="col-sm-2 col-form-label" for="nom">Nom du Fournisseur<span style="color: red">*</span></label>
                                                      <div class="col-sm-10">
@@ -67,7 +66,9 @@
                                                 </div>
                                                 <div class="row">
                                                 	<div class="col-md-12">
+                                                	<a href="<c:url value="/?action=updateFournisseur&idFournisseur=${ fournisseur.idFournisseur }"/>" class="btn btn-primary">
                                                 		<button class="btn btn-primary">Valider</button>
+                                                	</a>
                                                 	</div>
                                                 </div>
 											</form>
