@@ -45,23 +45,24 @@
                                         <div class="card-block">
 											<h4 class="sub-title">Modifier les champs du formulaire</h4>
 											
-											<form>
+											<form action="ControllerServlet" method="POST">
+												<input type="hidden" name="action" value="create" />
 												<div class="form-group row">
                                                     <label class="col-sm-2 col-form-label" for="nom">Nom du Fournisseur<span style="color: red">*</span></label>
                                                      <div class="col-sm-10">
-                                                          <input type="text" value="Simo Academy" class="form-control" id="nom" name="nom" required autofocus>
+                                                          <input type="text" value="<c:out value="${ fournisseur.nomFournisseur }" />" class="form-control" id="nom" name="nom" required autofocus>
                                                      </div>
                                                 </div>
 												<div class="form-group row">
                                                     <label class="col-sm-2 col-form-label" for="adresse">Adresse du Fournisseur<span style="color: red">*</span></label>
                                                      <div class="col-sm-10">
-                                                          <input type="text" value="Dschang - Cameroun" class="form-control" id="adresse" name="adresse" required>
+                                                          <input type="text" value="<c:out value="${ fournisseur.adresseFournisseur }" />" class="form-control" id="adresse" name="adresse" required>
                                                      </div>
                                                 </div>
 												<div class="form-group row">
                                                     <label class="col-sm-2 col-form-label" for="email">Email du Fournisseur<span style="color: red">*</span></label>
                                                      <div class="col-sm-10">
-                                                          <input type="email" value="simolarissa6@gmail.com" class="form-control" id="email" name="email" required>
+                                                          <input type="email" value="<c:out value="${ fournisseur.emailFournisseur }" />" class="form-control" id="email" name="email" required>
                                                      </div>
                                                 </div>
                                                 <div class="row">

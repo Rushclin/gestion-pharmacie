@@ -74,8 +74,19 @@ public class ControllerServlet extends HttpServlet {
 			ServletContext sc = getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateFournisseur.jsp");
 			rd.forward(request, response);
+		} else if (action.equals("deleteFournisseur")) {
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+			String idFournisseur = request.getParameter("idFournisseur");
+			System.out.println(idFournisseur);
+			try {
+				FournisseurDAO.deleteFournisseur(idFournisseur);
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			rd.forward(request, response);
 		} //else {
-			 response.getWriter().append("/fournisseur.jsp").append(request.getContextPath());
+			 response.getWriter().append("Served at: ").append(request.getContextPath());
 
 			//ServletContext sc = getServletContext();
 			//RequestDispatcher rd = sc.getRequestDispatcher("/fournisseur.jsp");

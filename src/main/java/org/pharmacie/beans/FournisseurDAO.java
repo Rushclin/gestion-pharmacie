@@ -107,7 +107,7 @@ public class FournisseurDAO extends HttpServlet {
 		}
 	}
 
-	public static void deleteFournisseur(int idFournisseur) {
+	public static void deleteFournisseur(String idFournisseur) {
 		// TODO Auto-generated method stub
 		System.out.println("Suppression d'un fournisseur");
 		String DELETE_FOURNISSEUR_SQL = "DELETE FROM fournisseur WHERE idFournisseur =" + idFournisseur + ";";
