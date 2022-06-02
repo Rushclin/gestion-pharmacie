@@ -100,6 +100,7 @@ public class ControllerServlet extends HttpServlet {
 					session.setAttribute("email", userAuth.getEmail());
 					session.setAttribute("nom", userAuth.getNameUser());
 					session.setAttribute("telephone", userAuth.getPhone());
+					session.setAttribute("iduser",userAuth.getIdUser());
 					this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 				} else {
 					request.setAttribute("erreur", "cet utilisateur n'existe pas");
