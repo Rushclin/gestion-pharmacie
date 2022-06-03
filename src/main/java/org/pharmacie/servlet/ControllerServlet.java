@@ -2,6 +2,7 @@ package org.pharmacie.servlet;
 
 import java.io.IOException;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -9,6 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.pharmacie.beans.Produit;
+
+import org.pharmacie.beans.ProduitDAO;
 
 /**
  * Servlet implementation class ControllerServlet
@@ -44,7 +49,51 @@ public class ControllerServlet extends HttpServlet {
 			ServletContext sc = getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/form.jsp");
 			rd.forward(request, response);
+		}else if(action.equals("listeproduit")) {
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/produit.jsp");
+			
+			try {
+				request.setAttribute("listProduit",ProduitDAO.findAll());
+				System.out.println(ProduitDAO.findAll() );
+			}catch(Exception e) {
+				e.printStackTrace();			
+				}
+			rd.forward(request, response);
+		}else if(action.equals("addproduit") || action.equals("create")) {
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/addProduit.jsp");
+			if(action.equals("create")) {
+				String nomproduit = request.getParameter("nomProduit");
+				String codeproduit =  request.getParameter("codeProduit");
+				String poid =  request.getParameter("poids");
+				String description =  request.getParameter("descriptionProduit");
+				String origine =  request.getParameter("originProduit");
+				String prix =  request.getParameter("prix");
+				System.out.println(nomproduit);
+				System.out.println(codeproduit);
+				ProduitDAO.createProduit(nomproduit, codeproduit, poid, description, origine, prix );
+			}
+			rd.forward(request, response);
 		}
+		else if (action.equals("deleteProduit")) {
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/produit.jsp ");
+			String idp = request.getParameter("idProduit");
+			System.out.println(idp);
+			try {
+				ProduitDAO.deleteProduit(idp);
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+			rd.forward(request, response);
+		}else if(action.equals("updateProduit") || action.equals("update")) {
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/update.jsp");
+			
+			rd.forward(request, response);
+		}
+	
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
