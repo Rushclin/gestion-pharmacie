@@ -10,6 +10,7 @@
 		<%@ include file="../assets/inc/pages/waves/js/waves.min.js" %>
 
 		<%@ include file="../assets/bower_components/jquery-slimscroll/js/jquery.slimscroll.js" %>
+		<%@ include file="../assets/bower_components/select2/js/select2.full.min.js" %>
 		
 		<%@ include file="../assets/inc/pages/chart/float/jquery.flot.js" %>
 		<%@ include file="../assets/inc/pages/chart/float/jquery.flot.categories.js" %>
@@ -25,6 +26,7 @@
 		<%@ include file="../assets/inc/pages/dashboard/custom-dashboard.min.js" %>
 		
 		<%@ include file="../assets/inc/js/script.min.js" %>
+		<%@ include file="../assets/inc/pages/advance-elements/select2-custom.js" %>
 	</script>
 	<script type="javascript" scr="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.js"></script>
 	

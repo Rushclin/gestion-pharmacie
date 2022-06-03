@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Login</title>
+		<title>SignUp</title>
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     	<link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
@@ -29,7 +29,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <form class="md-float-material form-material" method="POST">
+                    <form class="md-float-material form-material" method="POST" action="?action=signup">
                         <div class="text-center">
                             <h3>PHARMACIE DU CENTRE</h3>
                         </div>
@@ -41,20 +41,35 @@
                                     </div>
                                 </div>
                                 <p class="text-muted text-center p-b-5">Bienvenue cher fidele utilisateur</p>
-                               <c:if test="${ !empty erreur }">
+                                 <c:if test="${ !empty erreur }">
 	                                    <div class="alert alert-danger" role="alert">	
 	                                   		 <c:out value="${erreur}"></c:out>
 	                                    </div>
                                  </c:if>
+                                <div class="form-group form-primary">
+                                    <input type="text" name="nom" class="form-control" required="">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">Nom</label>
+                                </div>
                                 <div class="form-group form-primary">
                                     <input type="email" name="email" class="form-control" required="">
                                     <span class="form-bar"></span>
                                     <label class="float-label">email</label>
                                 </div>
                                 <div class="form-group form-primary">
+                                    <input type="text" name="telephone" class="form-control" required="">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">telephone</label>
+                                </div>
+                                <div class="form-group form-primary">
                                     <input type="password" name="password" class="form-control" required="">
                                     <span class="form-bar"></span>
                                     <label class="float-label">Mot de passe</label>
+                                </div>
+                                <div class="form-group form-primary">
+                                    <input type="password" name="confirmpassword" class="form-control" required="">
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">confirmer votre mot de passe</label>
                                 </div>
                                 <div class="row m-t-25 text-left">
                                     <div class="col-12">
@@ -74,11 +89,11 @@
                                 </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">SE CONNECTER</button>
+                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">S'INSCRIRE</button>
                                         
                                     </div>
                                 </div>
-                                <p class="text-inverse text-left">Pas de compte, cree le <a href="?action=signup"> <b> ici </b></a></p>
+                                <p class="text-inverse text-left">Deja un compte, cliquez <a href="/gestion-pharmacie"><b> ici </b></a></p>
                             </div>
                         </div>
                     </form>

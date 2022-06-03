@@ -18,6 +18,7 @@
 			<%@ include file="../assets/inc/icon/feather/css/feather.css" %>
 			<%@ include file="../assets/inc/icon/font-awesome/css/font-awesome.min.css" %>
 			<%@ include file="../assets/bower_components/chartist/css/chartist.css" %>
+			<%@ include file="../assets/bower_components/select2/css/select2.min.css" %>
 			<%@ include file="../assets/inc/css/style.css" %>
 			<%@ include file="../assets/inc/css/widget.css" %>
 			<%@ include file="../assets/inc/css/pages.css" %>
@@ -75,7 +76,10 @@
 
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <span>John Doe</span>
+                                       
+                                        	<c:if test="${ !empty sessionScope.email && !empty sessionScope.nom }">
+                                        		 <span>${ sessionScope.nom }</span>
+                                        	</c:if>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
@@ -96,7 +100,7 @@
                                         </a>
                                         </li>
                                         <li>
-                                            <a href="auth-sign-in-social.html">
+                                            <a href="?action=deconnexion">
                                             <i class="feather icon-log-out"></i> Quitter
                                         </a>
                                         </li>
