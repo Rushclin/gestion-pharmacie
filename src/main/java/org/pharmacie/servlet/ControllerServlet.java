@@ -1,6 +1,7 @@
 package org.pharmacie.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -71,9 +72,16 @@ public class ControllerServlet extends HttpServlet {
 				// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
 			}
 			rd.forward(request, response);
-		} else if (action.equals("updateClient")) {
+		} else if (action.equals("searchClient")) {
+			String idClient = request.getParameter("idClient");
+			// System.out.println(action);
 			ServletContext sc = getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateClient.jsp");
+			try {
+				request.setAttribute("client", ClientDAO.searchClient(idClient));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			rd.forward(request, response);
 		}
 		
@@ -85,6 +93,26 @@ public class ControllerServlet extends HttpServlet {
 				ClientDAO.deleteClient(idClient);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
+			}
+			rd.forward(request, response);
+		}
+		
+		else if (action.equals("updateClient") || action.equals("update")) {
+			String idClient = request.getParameter("idClient");
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateClient.jsp");
+			// System.out.println(action);
+			if (action.equals("update")) {
+				String nomClient = (String) request.getParameter("nomClient");
+				String telephoneClient = (String) request.getParameter("telephoneClient");
+				String emailClient = (String) request.getParameter("emailClient");
+				try {
+					ClientDAO.updateClient(idClient, nomClient, telephoneClient, emailClient);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
 			}
 			rd.forward(request, response);
 		}
