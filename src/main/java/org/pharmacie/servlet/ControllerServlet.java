@@ -66,7 +66,10 @@ public class ControllerServlet extends HttpServlet {
 				String nomFournisseur = (String) request.getParameter("nomFournisseur");
 				String adresseFournisseur = (String) request.getParameter("adresseFournisseur");
 				String emailFournisseur = (String) request.getParameter("emailFournisseur");
-				FournisseurDAO.createFournisseur(nomFournisseur, adresseFournisseur, emailFournisseur);
+				if(nomFournisseur != null && adresseFournisseur != null && emailFournisseur != null) {
+					rd = sc.getRequestDispatcher("fournisseur.jsp");
+					FournisseurDAO.createFournisseur(nomFournisseur, adresseFournisseur, emailFournisseur);
+				}
 				// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
 			}
 			rd.forward(request, response);
