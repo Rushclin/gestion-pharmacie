@@ -49,6 +49,23 @@
 					</ul>
 				</li>
 			</ul>
+			<div class="pcoded-navigation-label">Gerer les fournisseurs</div>
+			<ul class="pcoded-item pcoded-left-item">
+				<li class="pcoded-hasmenu">
+					<a href="javascript:void(0)" class="waves-effect waves-dark"> 
+						<span class="pcoded-micon">
+							<i class="feather icon-box"></i>
+						</span> 
+						<span class="pcoded-mtext">Fournisseur</span>
+					</a>
+					<ul class="pcoded-submenu">
+						<li class=" "><a href="<c:url value="/?action=fournisseur"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Liste des fournisseurs</span>
+						</a></li>
+						<li class=" "><a href="<c:url value="/?action=addFournisseur"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Ajouter un fournisseur</span>
+						</a></li>
+					</ul>
+				</li>
+			</ul>
 		</div>
 	</div>
 </nav>
