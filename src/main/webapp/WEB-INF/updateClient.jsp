@@ -45,23 +45,25 @@
 										<div class="card-block">
 											<h4 class="sub-title">Veuillez remplir tout les champs</h4>
 
-											<form action="clients" method="POST">
+											<form action="ControllerServlet" method="POST">
+												<input type="hidden" name="idClient" value="${client.idClient }" />
+												<input type="hidden" name="action" value="update" />
 												<div class="form-group row">
 													<label for="nomClient" class="col-sm-2 col-form-label">Nom du client<span style="color: red">*</span></label>
 													<div class="col-sm-10">
-														<input type="text" class="form-control" name="nomClient" required>
+														<input type="text" class="form-control" name="nomClient" value="${client.nomClient }" required>
 													</div>
 												</div>
 												<div class="form-group row">
 													<label for="telephoneClient" class="col-sm-2 col-form-label">Téléphone du client<span style="color: red">*</span></label>
 													<div class="col-sm-10">
-														<input type="number" class="form-control" name="telephoneClient" required>
+														<input type="number" class="form-control" name="telephoneClient" value="${client.telephoneClient }" required>
 													</div>
 												</div>
 												<div class="form-group row">
 													<label for="emailClient" class="col-sm-2 col-form-label">Email du client<span style="color: red">*</span></label>
 													<div class="col-sm-10">
-														<input type="text" class="form-control" name="emailClient" required>
+														<input type="text" class="form-control" name="emailClient" value="${client.emailClient }" required>
 													</div>
 												</div>
 										 

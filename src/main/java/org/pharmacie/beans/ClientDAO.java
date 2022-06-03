@@ -78,7 +78,7 @@ public class ClientDAO extends HttpServlet {
 				clients.add(client);
 			}
 		} catch (SQLException e) {
-			System.out.print(e.getMessage());
+			System.out.print(e.getMessage());   
 		}
 		return clients;
 	}
@@ -98,8 +98,28 @@ public class ClientDAO extends HttpServlet {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.print(e.getMessage());
+		}  
+	}
+	
+	public static void updateClient(String idClient, String nomClient, String telephoneClient, String emailClient) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("Modifier un client");
+		LocalDate dateEnregistrementClient = LocalDate.now();
+		String UPDATE_CLIENT_SQL = "UPDATE client SET nomClient ='" + nomClient
+				+ "',telephoneClient= '" + telephoneClient + "', emailClient = '" + emailClient
+				+ "' WHERE idClient = " + idClient + ";";
+		System.out.println(UPDATE_CLIENT_SQL);
+		// try-with-resource statement will auto close the connection.
+		try {
+			Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CLIENT_SQL);
+			preparedStatement.executeUpdate();
+			System.out.println(UPDATE_CLIENT_SQL);
+		} catch (SQLException e) {
+			System.out.print(e.getMessage());
 		}
 	}
+	
 	
 	public static void deleteClient(String idClient) {
 		// TODO Auto-generated method stub
@@ -112,6 +132,35 @@ public class ClientDAO extends HttpServlet {
 		} catch (SQLException e) {
 			System.out.print(e.getMessage());
 		}
+	}
+	
+	public static Client searchClient(String idClient) {
+		// TODO Auto-generated method stub
+		//System.out.println("Recherche d'un client");
+		String SELECT_CONTACT_BY_ID = "SELECT idClient, nomClient, telephoneClient, emailClient, dateAjoutClient FROM client where idClient = "
+				+ idClient + ";";
+		Client client = new Client();
+		// Step 1: Establishing a Connection
+		try { 
+			Connection connection = getConnection();
+
+			// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement1 = connection.prepareStatement(SELECT_CONTACT_BY_ID);
+			// Step 3: Execute the query or update query
+			ResultSet rs1 = preparedStatement1.executeQuery();
+			while (rs1.next()) {
+				int idClient1 = rs1.getInt("idClient");
+				String nomClient = rs1.getString("nomClient");
+				String telephoneClient = rs1.getString("telephoneClient");
+				String emailClient = rs1.getString("emailClient");
+				Date dateAjoutClient = rs1.getDate("dateAjoutClient"); 
+				client = new Client(idClient1, nomClient, telephoneClient, emailClient, dateAjoutClient);
+			}
+		} catch (SQLException e) {
+			System.out.print(e.getMessage());
+		}
+		return client;
+
 	}
 
 }

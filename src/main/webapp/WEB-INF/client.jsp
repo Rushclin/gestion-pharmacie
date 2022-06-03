@@ -76,7 +76,7 @@
 																<td>
 																	<div class="d-inline-block dropdown">
 																		<a
-																			href="<c:url value="/?action=updateClient&idClient=${client.idClient}"/>">
+																			href="<c:url value="/?action=searchClient&idClient=${client.idClient}"/>">
 																			<button type="button"
 																				class="btn-shadow btn btn-primary">
 																				<i class="fa fa-pen" aria-hidden="true"></i>
