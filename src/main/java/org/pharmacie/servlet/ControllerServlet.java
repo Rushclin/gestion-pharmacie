@@ -3,12 +3,10 @@ package org.pharmacie.servlet;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +22,7 @@ import org.pharmacie.dao.StockDao;
 /**
  * Servlet implementation class ControllerServlet
  */
-@WebServlet("/ControllerServlet")
+
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -71,9 +69,14 @@ public class ControllerServlet extends HttpServlet {
 			} else if (action.equals("stock")) {
 				getIndexStock(request, response);
 			} else if (action.equals("stock-new")) {
-				ServletContext sc = getServletContext();
-				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/nouveauStock.jsp");
-				rd.forward(request, response);
+				try {
+					ServletContext sc = getServletContext();
+					RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/nouveauStock.jsp");
+					request.setAttribute("fournisseurs", FournisseurDAO.findAll());
+					rd.forward(request, response);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			} else if (action.equals("stock-update")) {
 				String id = request.getParameter("id");
 				try {
@@ -235,6 +238,19 @@ public class ControllerServlet extends HttpServlet {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/signup.jsp").forward(request, response);
 			}
 
+		}else if(action.equals("save-stock")) {
+			HttpSession session = request.getSession();
+			Stock st = new Stock();
+			//st.setDateAjout(date);
+			st.setIdFournisseur(request.getParameter("idFournisseur"));
+			st.setQuantiteStock(request.getParameter("quantiteStock"));
+			st.setIdUser((String) session.getAttribute("id"));
+			try {
+				StockDao.saveStock(st);
+			}catch(Exception e) {
+				
+			}
+			getIndexStock(request, response);
 		}
 
 	}

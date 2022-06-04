@@ -1,12 +1,13 @@
 package org.pharmacie.beans;
 
+
 public class Stock {
 	
 	private String idStock;
 	private String quantiteStock;
 	private String dateAjout;
 	private String idFournisseur;
-	private int idUser;
+	private String idUser;
 	private String idProduit;
 	
 	public String getIdStock() {
@@ -24,8 +25,8 @@ public class Stock {
 	public String getDateAjout() {
 		return dateAjout;
 	}
-	public void setDateAjout(String dateAjout) {
-		this.dateAjout = dateAjout;
+	public void setDateAjout(String date) {
+		this.dateAjout = date;
 	}
 	public String getIdFournisseur() {
 		return idFournisseur;
@@ -33,11 +34,11 @@ public class Stock {
 	public void setIdFournisseur(String string) {
 		this.idFournisseur = string;
 	}
-	public int getIdUser() {
+	public String getIdUser() {
 		return idUser;
 	}
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setIdUser(String object) {
+		this.idUser = object;
 	}
 	public String getIdProduit() {
 		return idProduit;

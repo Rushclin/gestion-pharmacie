@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +66,26 @@ public class StockDao {
 		}
 
 	}
+	
+	
+	public static void saveStock(Stock st) throws Exception {
+		Class.forName("com.mysql.jdbc.Driver");
+		LocalDate date = LocalDate.now();
+		String INSERTION = "INSERT INTO stock "
+				+ "( quantite, idFournisseur, dateAjout) VALUES"
+				+ " ('"+ st.getQuantiteStock() + "','" + st.getIdFournisseur() + "','" + date  +"');";
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacie", "root", "");
+			PreparedStatement prepareStatement = connection.prepareStatement(INSERTION);
+			prepareStatement.executeUpdate();
+			connection.close();
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	// Recuperer un stock avec l'identifiant
-	public static Stock getOneStock(String id) throws ClassNotFoundException {
+	public static Stock getOneStock(String id) throws Exception {
 		ResultSet resultat = null;
 		Statement statement = null;
 		Stock st = new Stock();

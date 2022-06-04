@@ -45,7 +45,7 @@
                                         <div class="card-block">
 											<h4 class="sub-title">Remplissez le formulaire completement</h4>
 											
-											<form>
+											<form method="POST" action="?action=save-stock">
 												<div class="form-group row">
                                                     <label class="col-sm-2 col-form-label">Quantite </label>
                                                      <div class="col-sm-10">
@@ -56,9 +56,12 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-2 col-form-label">Fournisseur </label>
 													<div class="col-sm-10">
-														<select class="js-example-basic-single col-sm-12" required>
-															<option value="001">Takam Rushclin</option>
-															<option value="002">Mokam Berline</option>
+														<select class="js-example-basic-single col-sm-12" required name="idFournisseur">
+														<c:forEach var="fournisseur" items="${fournisseurs }">
+															<option value="${fournisseur.idFournisseur }">
+																<c:out value="${fournisseur.nomFournisseur }"/>
+															</option>
+														</c:forEach>
 														</select>
                                                    	</div>
                                                 </div>
