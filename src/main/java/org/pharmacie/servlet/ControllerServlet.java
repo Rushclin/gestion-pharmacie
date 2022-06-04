@@ -2,6 +2,7 @@ package org.pharmacie.servlet;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
@@ -17,6 +18,7 @@ import com.pharmacy.beans.User;
 import com.pharmacy.dao.UserDao;
 
 import org.pharmacie.beans.Stock;
+import org.pharmacie.dao.FournisseurDAO;
 import org.pharmacie.dao.StockDao;
 
 /**
@@ -94,6 +96,93 @@ public class ControllerServlet extends HttpServlet {
 
 				}
 				getIndexStock(request, response);
+			} else if (action.equals("fournisseur")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				try {
+					request.setAttribute("listFournisseur", FournisseurDAO.findAll());
+					// System.out.println(FournisseurDAO.findAll());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			} else if (action.equals("addFournisseur") || action.equals("create")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/addFournisseur.jsp");
+				// System.out.println(action);
+				if (action.equals("create")) {
+					String nomFournisseur = (String) request.getParameter("nomFournisseur");
+					String adresseFournisseur = (String) request.getParameter("adresseFournisseur");
+					String emailFournisseur = (String) request.getParameter("emailFournisseur");
+					rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+					if (nomFournisseur != null && adresseFournisseur != null && emailFournisseur != null) {
+						
+						try {
+							FournisseurDAO.createFournisseur(nomFournisseur, adresseFournisseur, emailFournisseur);
+							try {
+								request.setAttribute("listFournisseur", FournisseurDAO.findAll());
+								this.getServletContext().getRequestDispatcher("/WEB-INF/fournisseur.jsp").forward(request,
+										response);
+								// System.out.println(FournisseurDAO.findAll());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				}
+				rd.forward(request, response);
+			} else if (action.equals("searchFournisseur")) {
+				String idFournisseur = request.getParameter("idFournisseur");
+				// System.out.println(action);
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateFournisseur.jsp");
+				try {
+					request.setAttribute("fournisseur", FournisseurDAO.searchFournisseur(idFournisseur));
+					this.getServletContext().getRequestDispatcher("/WEB-INF/fournisseur.jsp").forward(request,
+							response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			} else if (action.equals("updateFournisseur") || action.equals("update")) {
+				String idFournisseur = request.getParameter("idFournisseur");
+				ServletContext sc = getServletContext();
+				this.getServletContext().getRequestDispatcher("/WEB-INF/updateFournisseur.jsp").forward(request,
+						response); // System.out.println(action);
+				if (action.equals("update")) {
+					String nomFournisseur = (String) request.getParameter("nomFournisseur");
+					String adresseFournisseur = (String) request.getParameter("adresseFournisseur");
+					String emailFournisseur = (String) request.getParameter("emailFournisseur");
+					try {
+						FournisseurDAO.updateFournisseur(idFournisseur, nomFournisseur, adresseFournisseur,
+								emailFournisseur);
+						try {
+							request.setAttribute("listFournisseur", FournisseurDAO.findAll());
+							// System.out.println(FournisseurDAO.findAll());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				}
+			} else if (action.equals("deleteFournisseur")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				String idFournisseur = request.getParameter("idFournisseur");
+				System.out.println(idFournisseur);
+				try {
+					FournisseurDAO.deleteFournisseur(idFournisseur);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				rd.forward(request, response);
 			} else if (action.equals("deconnexion")) {
 				session.invalidate();
 				ServletContext sc = getServletContext();
@@ -130,7 +219,7 @@ public class ControllerServlet extends HttpServlet {
 					session.setAttribute("email", userAuth.getEmail());
 					session.setAttribute("nom", userAuth.getNameUser());
 					session.setAttribute("telephone", userAuth.getPhone());
-					session.setAttribute("iduser",userAuth.getIdUser());
+					session.setAttribute("iduser", userAuth.getIdUser());
 					this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 				} else {
 					request.setAttribute("erreur", "cet utilisateur n'existe pas");
@@ -165,21 +254,21 @@ public class ControllerServlet extends HttpServlet {
 		}
 
 	}
-	
-	
+
 	// Cette fonction a pour vocation a eviter son ecriture plusieurs fois
-	
-	protected void getIndexStock(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void getIndexStock(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		boolean error;
 		try {
 			error = false;
 			request.setAttribute("error", error);
 			request.setAttribute("stocks", StockDao.getAllStock());
-			//System.out.print(StockDao.getAllStock());
+			// System.out.print(StockDao.getAllStock());
 			ServletContext sc = getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/indexStock.jsp");
 			rd.forward(request, response);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			error = true;
 			request.setAttribute("error", error);
 			ServletContext sc = getServletContext();
@@ -189,9 +278,3 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 }
- 
-
-	
-
-	
-			   
