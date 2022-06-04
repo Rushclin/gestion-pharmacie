@@ -66,6 +66,40 @@
 					</ul>
 				</li>
 			</ul>
+			<div class="pcoded-navigation-label">Gerer les clients</div>
+			<ul class="pcoded-item pcoded-left-item">
+				<li class="pcoded-hasmenu">
+					<a href="javascript:void(0)" class="waves-effect waves-dark"> 
+						<span class="pcoded-micon">
+							<i class="feather icon-box"></i>
+						</span> 
+						<span class="pcoded-mtext">Clients</span>
+					</a>
+					<ul class="pcoded-submenu">
+						<li class=" "><a href="<c:url value="/?action=clients"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Liste des clients</span>
+						</a></li>
+						<li class=" "><a href="<c:url value="/?action=addclient"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Ajouter un client</span>
+						</a></li>
+					</ul>
+				</li>
+			</ul>
+			<div class="pcoded-navigation-label">Gerer les produits</div>
+			<ul class="pcoded-item pcoded-left-item">
+				<li class="pcoded-hasmenu">
+					<a href="javascript:void(0)" class="waves-effect waves-dark"> 
+						<span class="pcoded-micon">
+							<i class="feather icon-box"></i>
+						</span> 
+						<span class="pcoded-mtext">Produits</span>
+					</a>
+					<ul class="pcoded-submenu">
+						<li class=" "><a href="<c:url value="/?action=listeproduit"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Liste des produits</span>
+						</a></li>
+						<li class=" "><a href="<c:url value="/?action=addproduit"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Ajouter un produit</span>
+						</a></li>
+					</ul>
+				</li>
+			</ul>
 		</div>
 	</div>
 </nav>

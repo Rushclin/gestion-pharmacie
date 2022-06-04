@@ -18,7 +18,9 @@ import com.pharmacy.beans.User;
 import com.pharmacy.dao.UserDao;
 
 import org.pharmacie.beans.Stock;
+import org.pharmacie.dao.ClientDAO;
 import org.pharmacie.dao.FournisseurDAO;
+import org.pharmacie.dao.ProduitDAO;
 import org.pharmacie.dao.StockDao;
 
 /**
@@ -116,13 +118,13 @@ public class ControllerServlet extends HttpServlet {
 					String emailFournisseur = (String) request.getParameter("emailFournisseur");
 					rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
 					if (nomFournisseur != null && adresseFournisseur != null && emailFournisseur != null) {
-						
+
 						try {
 							FournisseurDAO.createFournisseur(nomFournisseur, adresseFournisseur, emailFournisseur);
 							try {
 								request.setAttribute("listFournisseur", FournisseurDAO.findAll());
-								this.getServletContext().getRequestDispatcher("/WEB-INF/fournisseur.jsp").forward(request,
-										response);
+								this.getServletContext().getRequestDispatcher("/WEB-INF/fournisseur.jsp")
+										.forward(request, response);
 								// System.out.println(FournisseurDAO.findAll());
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -142,8 +144,6 @@ public class ControllerServlet extends HttpServlet {
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateFournisseur.jsp");
 				try {
 					request.setAttribute("fournisseur", FournisseurDAO.searchFournisseur(idFournisseur));
-					this.getServletContext().getRequestDispatcher("/WEB-INF/fournisseur.jsp").forward(request,
-							response);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -160,12 +160,6 @@ public class ControllerServlet extends HttpServlet {
 					try {
 						FournisseurDAO.updateFournisseur(idFournisseur, nomFournisseur, adresseFournisseur,
 								emailFournisseur);
-						try {
-							request.setAttribute("listFournisseur", FournisseurDAO.findAll());
-							// System.out.println(FournisseurDAO.findAll());
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -182,6 +176,115 @@ public class ControllerServlet extends HttpServlet {
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
+				rd.forward(request, response);
+			} else if (action.equals("clients")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/client.jsp");
+				try {
+					request.setAttribute("listClient", ClientDAO.findAll());
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				rd.forward(request, response);
+			} else if (action.equals("searchClient")) {
+				String idClient = request.getParameter("idClient");
+				// System.out.println(action);
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateClient.jsp");
+				try {
+					request.setAttribute("client", ClientDAO.searchClient(idClient));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			} else if (action.equals("deleteClient")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/client.jsp");
+				String idClient = request.getParameter("idClient");
+				try {
+					ClientDAO.deleteClient(idClient);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				rd.forward(request, response);
+			} else if (action.equals("addclient") || action.equals("createClient")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/addClient.jsp");
+				System.out.println(action);
+				if (action.equals("createClient")) {
+					String nomClient = (String) request.getParameter("nomClient");
+					String telephoneClientr = (String) request.getParameter("telephoneClient");
+					String emailClient = (String) request.getParameter("emailClient");
+					System.out.println("great");
+					ClientDAO.createClient(nomClient, telephoneClientr, emailClient);
+					System.out.println("wonderful");
+					// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				}
+				rd.forward(request, response);
+			} else if (action.equals("updateClient") || action.equals("updateclient")) {
+				String idClient = request.getParameter("idClient");
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateClient.jsp");
+				// System.out.println(action);
+				if (action.equals("update")) {
+					String nomClient = (String) request.getParameter("nomClient");
+					String telephoneClient = (String) request.getParameter("telephoneClient");
+					String emailClient = (String) request.getParameter("emailClient");
+					try {
+						ClientDAO.updateClient(idClient, nomClient, telephoneClient, emailClient);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				}
+				rd.forward(request, response);
+			} else if (action.equals("listeproduit")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/produit.jsp");
+
+				try {
+					request.setAttribute("listProduit", ProduitDAO.findAll());
+					System.out.println(ProduitDAO.findAll());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			} else if (action.equals("addproduit") || action.equals("createProduit")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/addProduit.jsp");
+				if (action.equals("createProduit")) {
+					String nomproduit = request.getParameter("nomProduit");
+					String codeproduit = request.getParameter("codeProduit");
+					String poid = request.getParameter("poids");
+					String description = request.getParameter("descriptionProduit");
+					String origine = request.getParameter("originProduit");
+					String prix = request.getParameter("prix");
+					System.out.println(nomproduit);
+					System.out.println(codeproduit);
+					try {
+						ProduitDAO.createProduit(nomproduit, codeproduit, poid, description, origine, prix);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				rd.forward(request, response);
+			} else if (action.equals("deleteProduit")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/produit.jsp ");
+				String idp = request.getParameter("idProduit");
+				System.out.println(idp);
+				try {
+					ProduitDAO.deleteProduit(idp);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				rd.forward(request, response);
+			} else if (action.equals("updateProduit") || action.equals("updateproduit")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/update.jsp");
+
 				rd.forward(request, response);
 			} else if (action.equals("deconnexion")) {
 				session.invalidate();
