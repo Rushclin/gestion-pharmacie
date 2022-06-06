@@ -1,14 +1,22 @@
-package org.pharmacie.dao.servlet;
+package beans;
 
 public class Categorie {
-private String idCategorie;
+private int idCategorie;
 private String nomCategorie;
 private String description;
-
-public String getIdCategorie() {
+public Categorie(){
+	
+}
+public Categorie( int id,String nomCategorie, String description) {
+super();
+this.setIdCategorie(id);
+this.setNomCategorie(nomCategorie);
+this.setDescription(description);
+}
+public int getIdCategorie() {
 	return idCategorie;
 }
-public void setIdCategorie(String idCategorie) {
+public void setIdCategorie(int idCategorie) {
 	this.idCategorie = idCategorie;
 }
 public String getNomCategorie() {

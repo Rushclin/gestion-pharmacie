@@ -15,20 +15,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.pharmacie.dao.servlet.Categorie;
+
+import beans.Categorie;
 
 /**
- * Servlet implementation class categorieDao
+ * Servlet implementation class CategorieDao
  */
-@WebServlet("/categorieDao")
-public class categorieDao extends HttpServlet {
+@WebServlet("/CategorieDao")
+public class CategorieDao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private static String jdbcURL = "jdbc:mysql://localhost:3306/pharmacie";
 	private static String jdbcUsername = "root";
 	private static String jdbcPassword = "";
 
-    public categorieDao() {
+    public CategorieDao() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,7 +48,7 @@ public class categorieDao extends HttpServlet {
 		//System.out.print(connection);
 		return connection;
 	}
-    public static List<Categorie> findAll(){
+    public static List<Categorie> findAll()throws Exception{
 		//System.out.println("Recherche de toute toute les categories");
 		// using try-with-resources to avoid closing resources (boiler plate code)
 		List<Categorie> categories = new ArrayList<>();
@@ -62,7 +63,7 @@ public class categorieDao extends HttpServlet {
 			// Step 4: Process the ResultSet object.
 			while (rs.next()) {
 				Categorie categorie = new Categorie ();
-				String idCategorie = rs.getString("idCategorie");
+				int idCategorie = rs.getInt("idCategorie");
 				String nomCategorie = rs.getString("nomCategorie");
 				String description = rs.getString("description");
 				
@@ -71,7 +72,7 @@ public class categorieDao extends HttpServlet {
 				categorie.setDescription(description);
 				
 				categories.add(categorie);
-			}
+			} 
 		} catch (SQLException e) {
 			System.out.print(e.getMessage());
 			;
@@ -83,12 +84,12 @@ public class categorieDao extends HttpServlet {
 
 
 
-	public static void createCategorie(String idCategorie, String nomCategorie) {
+	public static void createCategorie(String nomCategorie,String description) {
 		// TODO Auto-generated method stub
 		//System.out.println("Creation d'une categorie");
 		;
 		String INSERT_CATTEGORIE_SQL = "INSERT INTO categorie"
-		+ "  (idCategorie, nomCategorie) VALUES "+ " ('" + idCategorie + "', '" + nomCategorie +"')";
+		+ "  (nomCategorie , description) VALUES "+ " ('" + nomCategorie + "', '" + description +"')";
 		//System.out.println(INSERT_CATTEGORIE_SQL);
 		// try-with-resource statement will auto close the connection.
 		try {
@@ -100,23 +101,26 @@ public class categorieDao extends HttpServlet {
 		}
 	}
  
-	public static void deleteCategorie(String idCategorie) {
+	public static void deleteCategorie(String idCategorie) throws Exception {
 		// TODO Auto-generated method stub
 		//System.out.println("Suppression d'une categorie");
 		String DELETE_CATEGGORIE_SQL = "DELETE FROM categorie WHERE idCategorie =" + idCategorie + ";";
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGGORIE_SQL)) {
+		Connection connection = getConnection();
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGGORIE_SQL)) {
 			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.print(e.getMessage());
+		}finally {
+			connection.close();
 		}
 	}
 
-	public static Categorie searchFournisseur(String idCategorie) {
+	public static Categorie searchCategorie(String idCategorie) throws Exception {
 		// TODO Auto-generated method stub
 		//System.out.println("Recherche d'une categorie");
-		String SELECT_CONTACT_BY_ID = "SELECT idCategorie, nomCategorie where idFournisseur = "+ idCategorie + ";";
+		String SELECT_CONTACT_BY_ID = "SELECT idCategorie, nomCategorie,description FROM categorie where idCategorie = "+ idCategorie + ";";
 	 Categorie categorie = new  Categorie();
 		// Step 1: Establishing a Connection
 		try {
@@ -129,8 +133,9 @@ public class categorieDao extends HttpServlet {
 			while (rs1.next()) {
 				int idCategorie1 = rs1.getInt("idCategorie");
 				String nomCategorie  = rs1.getString("nomCategorie");
+				String description  = rs1.getString("description");
 				
-				categorie= Categorie(idCategorie,nomCategorie);
+				categorie=new Categorie(idCategorie1,nomCategorie,description);
 			}
 		} catch (SQLException e) {
 			System.out.print(e.getMessage());
@@ -139,16 +144,14 @@ public class categorieDao extends HttpServlet {
 
 	}
 
-	private static Categorie Categorie(String idCategorie, String nomCategorie) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public static void updateCategorie(String idCategorie, String nomCategorie )throws SQLException {
+	
+	
+	public static void updateCategorie(String idCategorie, String nomCategorie ,String description)throws SQLException {
 		System.out.println("Modification d'une categorie");
-		String UPDATE_CATEGGORIE_SQL = "UPDATE categorie SET nomCategorie ='" + nomCategorie
-				+ "' WHERE idCategorie = " + idCategorie + ";";
-		try {
+		String UPDATE_CATEGGORIE_SQL = "UPDATE categorie SET nomCategorie='" + nomCategorie
+				+ "',descriprion= '" + description + "' WHERE idCategorie = " + idCategorie + ";";
 			Connection connection = getConnection();
+			try {
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGGORIE_SQL);
 			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();

@@ -37,7 +37,7 @@
 
 						<li class=" "><a href="<c:url value="/?action=categorie"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Liste</span>
 						</a></li>
-						<li class=" "><a href="<c:url value="/?action=nouvelleCategorie"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Nouvelle categorie
+						<li class=" "><a href="<c:url value="/?action=addCategorie"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Nouvelle categorie
 							</span>
 						</a></li>
 					</ul>

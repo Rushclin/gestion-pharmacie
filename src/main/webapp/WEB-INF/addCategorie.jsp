@@ -16,9 +16,9 @@
 						<div class="page-header-title">
 							<i class="feather icon-home bg-c-blue"></i>
 							<div class="d-inline">
-								<h5>Modifier une categorie</h5>
-								<span>Veuillez remplir les champs pour modifier cette
-									categorie</span>
+								<h5>Ajouter une categorie</h5>
+								<span>Veuillez remplir les champs pour ajouter une
+									categorie pour la pharmacie</span>
 							</div>
 						</div>
 					</div>
@@ -27,7 +27,7 @@
 							<ul class=" breadcrumb breadcrumb-title">
 								<li class="breadcrumb-item"><a href="index.html"><i
 										class="feather icon-home"></i></a></li>
-								<li class="breadcrumb-item"><a href="#!">updateCategorie</a></li>
+								<li class="breadcrumb-item"><a href="#!">addFournisseur</a></li>
 							</ul>
 						</div>
 					</div>
@@ -44,28 +44,35 @@
 											<h5>Informations formulaire</h5>
 										</div>
 										<div class="card-block">
-											<h4 class="sub-title">Modifier les champs du formulaire</h4>
+											<h4 class="sub-title">Remplissez le formulaire
+												completement</h4>
 
-											<form action="ControllerServlet" method="POST">
-												<input type="hidden" name="idFournisseur" value="${ categorie.idCategorie }" />
-												<input type="hidden" name="action" value="update" />
+											<form action="ControllerServlet" method="get">
+												<input type="hidden" name="action" value="create" />
 												<div class="form-group row">
 													<label class="col-sm-2 col-form-label" for="nomCategorie">Nom
-														de Categorie<span style="color: red">*</span>
+														de la categorie<span style="color: red">*</span>
 													</label>
 													<div class="col-sm-10">
-														<input type="text"
-															value="${ categorie.nomCategorie }"
-															class="form-control" id="nomCategorie" name="nomCategorie" required
+														<input type="text" class="form-control"
+															id="nomCategorie" name="nomCategorie" required
 															autofocus>
 													</div>
 												</div>
-											
-													
+												<div class="form-group row">
+													<label class="col-sm-2 col-form-label"
+														for="description">description de la categorie<span
+														style="color: red">*</span></label>
+													<div class="col-sm-10">
+														<input type="text" class="form-control"
+															id="description" name="description"
+															required>
+													</div>
 												</div>
+												
 												<div class="row">
 													<div class="col-md-12">
-															<button class="btn btn-primary">Valider</button>
+														<button class="btn btn-primary">Valider</button>
 													</div>
 												</div>
 											</form>

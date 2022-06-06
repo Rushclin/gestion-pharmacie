@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.pharmacie.dao.servlet.categorieDao;
+import org.pharmacie.dao.servlet.CategorieDao;
  
 
 /**
@@ -54,41 +54,52 @@ public class ControllerServlet extends HttpServlet {
 			ServletContext sc = getServletContext();
 			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/categorie.jsp");
 			try {
-				request.setAttribute("ListCategorie",categorieDao.findAll());
+				request.setAttribute("ListCategorie",CategorieDao.findAll());
 				//System.out.println(categorieDAO.findAll());
 				
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 			rd.forward(request, response);
-		}else if (action.equals("nouvelleCategorie")|| action.equals("create")) {
+		}else if (action.equals("addCategorie")|| action.equals("create")) {
 			ServletContext sc = getServletContext();
-			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/nouvelleCategorie.jsp");
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/addCategorie.jsp");
 			// System.out.println(action);
 			if(action.equals("create")) {
-				String idCategorie = (String) request.getParameter("idCategorie");
 				String nomCategorie = (String) request.getParameter("nomCategorie");
 				String description = (String) request.getParameter("description");
 				
-				if(idCategorie!=null && nomCategorie!=null && description!=null) {
-					rd = sc.getRequestDispatcher("categorie.jsp");
-					categorieDao.createCategorie(idCategorie, nomCategorie);
+				if(nomCategorie!=null && description!=null) {
+					rd = sc.getRequestDispatcher("/WEB-INF/categorie.jsp");
+					CategorieDao.createCategorie(nomCategorie,description);
 				}
 				// rd = sc.getRequestDispatcher("/WEB-INF/categorie.jsp");
 			}
 			rd.forward(request, response);
+		}else if (action.equals("searchCategorie")) {
+			String idCategorie = request.getParameter("idCategorie");
+			// System.out.println(action);
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateCategorie.jsp");
+			try {
+				request.setAttribute("categorie", CategorieDao.searchCategorie(idCategorie));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			rd.forward(request, response);
+		 
 		}else if(action.equals("updateCategorie")|| action.equals("update")) {
 			String idCategorie = request.getParameter("idCategorie");
 			ServletContext sc = getServletContext();
-			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateCategorie.jsp");
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/categorie.jsp");
 			// System.out.println(action);
 			if (action.equals("update")) {
-				String  idCategorie1 = (String) request.getParameter("idCategorie");
+				
 				String nomCategorie = (String) request.getParameter("nomCategorie");
 				String description = (String) request.getParameter("description");
 				
 				try {
-					categorieDao.updateCategorie(idCategorie1, nomCategorie);
+					CategorieDao.updateCategorie( idCategorie, nomCategorie, description);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -97,17 +108,16 @@ public class ControllerServlet extends HttpServlet {
 			}
 			rd.forward(request, response);
 		}else if (action.equals("deleteCategorie")) {
+			ServletContext sc = getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/categorie.jsp");
 			String idCategorie = request.getParameter("idCategorie");
 			System.out.println(idCategorie);
 			try {
-				categorieDao.deleteCategorie(idCategorie);
+				CategorieDao.deleteCategorie(idCategorie);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			ServletContext sc = getServletContext();
-			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/categorie.jsp");
 			rd.forward(request, response);
-			//response.sendRedirect("/");
 		}
 		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
