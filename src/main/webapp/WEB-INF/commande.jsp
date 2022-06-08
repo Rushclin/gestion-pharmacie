@@ -68,10 +68,15 @@
 													</thead>
 													<tbody>
 														<c:forEach var="commande" items="${listCommande}">
+														<%-- <c:forEach var="client" items="${clientList}"> --%>
 															<tr>
-																<td><c:out value="" /></td>
+																<td><c:out value="${ i = i + 1 }" /></td>
 																<td><c:out value="${ commande.idCommande }" /></td>
-																<td><c:out value="${ commande.idClient }" /></td>
+																<td>
+																	<c:forEach var="client" items="${clientList}">
+																		<c:out value="${ commande.idClient==client.idClient ? client.nomClient : '' }" />
+																	</c:forEach>
+																</td>
 																<td><c:out value="${ commande.quantiteCommande }" /></td>
 																<td><c:out value="${ commande.prixCommande }" /></td>
 																<td><c:out value="${ commande.dateCommande }" /></td>

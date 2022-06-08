@@ -52,8 +52,9 @@
                                                     <label for="idClient" class="col-sm-2 col-form-label">Nom du Client </label>
 													<div class="col-sm-10">
 														<select class="js-example-basic-single col-sm-12" id="idClient" name="idClient" required>
-															<option value="1">Lionnel Rushclin</option>
-															<option value="2">Duval Berline</option>
+															<c:forEach var="client1" items="${ clientList1 }">
+																<option value="${client1.idClient}">${ client1.nomClient }</option>
+															</c:forEach>
 														</select>
                                                    	</div>
                                                 </div>

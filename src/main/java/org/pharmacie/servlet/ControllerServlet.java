@@ -172,6 +172,8 @@ public class ControllerServlet extends HttpServlet {
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/commande.jsp");
 				try {
 					request.setAttribute("listCommande", CommandeDAO.findAll());
+					request.setAttribute("clientList", CommandeDAO.findAllClient());
+					int i = 0;
 					System.out.println(CommandeDAO.findAll());
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -181,6 +183,7 @@ public class ControllerServlet extends HttpServlet {
 				ServletContext sc = getServletContext();
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/addCommande.jsp");
 				 System.out.println(action);
+				 request.setAttribute("clientList1", CommandeDAO.findAllClient());
 				if (action.equals("createCom")) {
 					String quantiteCommande = (String) request.getParameter("quantiteCommande");
 					String prixCommande = (String) request.getParameter("prixCommande");
@@ -189,6 +192,7 @@ public class ControllerServlet extends HttpServlet {
 						rd = sc.getRequestDispatcher("/WEB-INF/commande.jsp");
 						try {
 							CommandeDAO.createCommande(quantiteCommande, prixCommande, idClient);
+							request.setAttribute("clientList1", CommandeDAO.findAllClient());
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

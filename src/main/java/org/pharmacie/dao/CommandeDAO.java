@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.pharmacie.beans.Client;
 //import org.pharmacie.beans.;
 //import org.pharmacie.beans.Client;
 import org.pharmacie.beans.Commande;
@@ -99,6 +100,41 @@ public class CommandeDAO extends HttpServlet {
 		}
 		System.out.println("tout vos commandes sont afficher");
 		return commandes;
+	}
+	
+	public static List<Client> findAllClient() {
+		System.out.println("Recherche de tous les fournisseurs");
+		// using try-with-resources to avoid closing resources (boiler plate code)
+		List<Client> clients = new ArrayList<>();
+		// Step 1: Establishing a Connection
+		try {
+			Connection connection = getConnection();
+
+			// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM client");
+			// Step 3: Execute the query or update query
+			ResultSet rs = preparedStatement.executeQuery();
+			// Step 4: Process the ResultSet object.
+			while (rs.next()) {
+				Client client = new Client();
+				int idClient = rs.getInt("idClient");
+				String nomClient = rs.getString("nomClient");
+				String telephoneClient = rs.getString("telephoneClient");
+				String emailClient = rs.getString("emailClient");
+				Date dateAjoutClient = rs.getDate("dateAjoutClient");
+				client.setIdClient(idClient);
+				client.setNomClient(nomClient);
+				client.setTelephoneClient(telephoneClient);
+				client.setEmailClient(emailClient);
+				client.setDateAjoutClient(dateAjoutClient);
+				clients.add(client);
+				
+				System.out.println(client);
+			}
+		} catch (SQLException e) {
+			System.out.print(e.getMessage());   
+		}
+		return clients;
 	}
 
 	public static void createCommande(String quantiteCommande, String prixCommande, String idClient) throws Exception {
@@ -184,36 +220,53 @@ public class CommandeDAO extends HttpServlet {
 			connection.close();
 		}
 	}
+	
+	public static String nomDuClient(int id) {
+		String nom = null;
+		String SELECT_NOM_CLIENT = "SELECT nomClient FROM client WHERE idClient = "+id+";";
+		try {
+			Connection connect = getConnection();
+			
+			PreparedStatement prepa = connect.prepareStatement(SELECT_NOM_CLIENT);
+			ResultSet result = prepa.executeQuery();
+			while (result.next()) {
+				String nomClient = result.getString(nom);
+				nom = nomClient;
+			}
+		}catch (SQLException e) {
+			System.out.print(e.getMessage());
+		}
+				
+		return nom;
+	}
 
-//	public static Client searchClient(int idClient) throws SQLException {
-//	// TODO Auto-generated method stub
-//	// System.out.println("Recherche d'un client");
-//	String SELECT_CLIENT_BY_ID = "SELECT idClient, nomClient, telephoneClient, emailClient, dateAjoutClient FROM client where idClient = "
-//			+ idClient + ";";
-//	Client client = new Client();
-//	Connection connection = getConnection();
-//	// Step 1: Establishing a Connection
-//	try {
-//
-//		// Step 2:Create a statement using connection object
-//		PreparedStatement preparedStatement1 = connection.prepareStatement(SELECT_CLIENT_BY_ID);
-//		// Step 3: Execute the query or update query
-//		ResultSet rs1 = preparedStatement1.executeQuery();
-//		while (rs1.next()) {
-//			int idClient1 = rs1.getInt("idClient");
-//			String nomClient = rs1.getString("nomClient");
-//			int telephoneClient = rs1.getInt("telephoneClient");
-//			String emailClient = rs1.getString("emailClient");
-//			String dateAjoutClient = rs1.getString("dateAjoutClient");
-//			client = new Client(idClient1,nomClient,telephoneClient,emailClient);
-//		}
-//	} catch (SQLException e) {
-//		System.out.print(e.getMessage());
-//	} finally {
-//		connection.close();
-//	}
-//	return client;
-//
-//}
+	public static Client searchClient(String idClient) {
+		// TODO Auto-generated method stub
+		//System.out.println("Recherche d'un client");
+		String SELECT_CONTACT_BY_ID = "SELECT idClient, nomClient, telephoneClient, emailClient, dateAjoutClient FROM client where idClient = "
+				+ idClient + ";";
+		Client client = new Client();
+		// Step 1: Establishing a Connection
+		try { 
+			Connection connection = getConnection();
+
+			// Step 2:Create a statement using connection object
+			PreparedStatement preparedStatement1 = connection.prepareStatement(SELECT_CONTACT_BY_ID);
+			// Step 3: Execute the query or update query
+			ResultSet rs1 = preparedStatement1.executeQuery();
+			while (rs1.next()) {
+				int idClient1 = rs1.getInt("idClient");
+				String nomClient = rs1.getString("nomClient");
+				String telephoneClient = rs1.getString("telephoneClient");
+				String emailClient = rs1.getString("emailClient");
+				Date dateAjoutClient = rs1.getDate("dateAjoutClient"); 
+				client = new Client(idClient1, nomClient, telephoneClient, emailClient, dateAjoutClient);
+			}
+		} catch (SQLException e) {
+			System.out.print(e.getMessage());
+		}
+		return client;
+
+	}
 
 }
