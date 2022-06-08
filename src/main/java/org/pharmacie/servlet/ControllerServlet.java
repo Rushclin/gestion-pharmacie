@@ -18,6 +18,7 @@ import com.pharmacy.beans.User;
 import com.pharmacy.dao.UserDao;
 
 import org.pharmacie.beans.Stock;
+import org.pharmacie.dao.CommandeDAO;
 import org.pharmacie.dao.FournisseurDAO;
 import org.pharmacie.dao.StockDao;
 
@@ -166,7 +167,82 @@ public class ControllerServlet extends HttpServlet {
 					System.out.println(e.getMessage());
 				}
 				rd.forward(request, response);
+			} else if (action.equals("commande")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/commande.jsp");
+				try {
+					request.setAttribute("listCommande", CommandeDAO.findAll());
+					System.out.println(CommandeDAO.findAll());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			} else if (action.equals("addCommande") || action.equals("createCom")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/addCommande.jsp");
+				 System.out.println(action);
+				if (action.equals("createCom")) {
+					String quantiteCommande = (String) request.getParameter("quantiteCommande");
+					String prixCommande = (String) request.getParameter("prixCommande");
+					String idClient = (String) request.getParameter("idClient");
+					if(quantiteCommande != null && prixCommande != null && idClient != null) {
+						rd = sc.getRequestDispatcher("/WEB-INF/commande.jsp");
+						try {
+							CommandeDAO.createCommande(quantiteCommande, prixCommande, idClient);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					// rd = sc.getRequestDispatcher("/WEB-INF/commande.jsp");
+				}
+				rd.forward(request, response);
+			} 
+		
+			else if (action.equals("deleteCommande")) {
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/commande.jsp");
+				String idCommande = request.getParameter("idCommande");
+				System.out.println(idCommande);
+				try {
+					CommandeDAO.deleteCommande(idCommande);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				rd.forward(request, response);
+			} else if (action.equals("searchCommande")) {
+				String idCommande = request.getParameter("idCommande");
+				 System.out.println(action);
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/updateCommande.jsp");
+				try {
+					request.setAttribute("commande", CommandeDAO.searchCommande(idCommande));
+					 System.out.println(action);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+			} else if (action.equals("updateCommande") || action.equals("updateCom")) {
+				String idCommande = request.getParameter("idCommande");
+				ServletContext sc = getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/commande.jsp");
+				// System.out.println(action);
+				if (action.equals("updateCom")) {
+					String quantiteCommande = (String) request.getParameter("quantiteCommande");
+					String prixCommande = (String) request.getParameter("prixCommande");
+					String idClient = (String) request.getParameter("idClient");
+					try {
+						CommandeDAO.updateCommande(idCommande, quantiteCommande, prixCommande, idClient);
+						System.out.println("succes");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// rd = sc.getRequestDispatcher("/WEB-INF/fournisseur.jsp");
+				}
+				rd.forward(request, response);
 			}
+			
 			else if (action.equals("deconnexion")) {
 				session.invalidate();
 				ServletContext sc = getServletContext();

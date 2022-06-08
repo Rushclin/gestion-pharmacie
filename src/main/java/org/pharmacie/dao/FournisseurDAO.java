@@ -26,7 +26,7 @@ import org.pharmacie.beans.Fournisseur;
 public class FournisseurDAO extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static String jdbcURL = "jdbc:mysql://localhost:3306/pharmacie";
+	private static String jdbcURL = "jdbc:mysql://localhost:3306/gestion_pharmacie";
 	private static String jdbcUsername = "root";
 	private static String jdbcPassword = "";
 
@@ -158,7 +158,6 @@ public class FournisseurDAO extends HttpServlet {
 			connection.close();
 		}
 		return fournisseur;
-
 	}
 
 	public static void updateFournisseur(String idFournisseur, String nomFournisseur, String adresseFournisseur,

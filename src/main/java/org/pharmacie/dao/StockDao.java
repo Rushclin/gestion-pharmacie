@@ -13,7 +13,7 @@ import org.pharmacie.beans.Stock;
 
 public class StockDao {
 	public static Statement connexion() throws SQLException {
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacie", "root", "");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestion_pharmacie", "root", "");
 		java.sql.Statement statement = connection.createStatement();
 		return statement;
 	}
@@ -51,7 +51,7 @@ public class StockDao {
 	public static void deleteStock(String id) throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacie", "root", "");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestion_pharmacie", "root", "");
 			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM stock WHERE idStock= ?");
 			preparedStatement.setString(1, id);
 			preparedStatement.executeUpdate();

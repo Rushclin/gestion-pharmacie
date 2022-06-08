@@ -8,7 +8,7 @@ public class ConnectionBD {
 	
 	public static Connection connexionBD() throws SQLException, Exception{
    	 Class.forName("com.mysql.jdbc.Driver");
-   	 Connection connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacie", "root", "");
+   	 Connection connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestion_pharmacie", "root", "");
 		return connexion;
    	 
     }

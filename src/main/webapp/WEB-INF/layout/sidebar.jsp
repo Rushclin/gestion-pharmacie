@@ -66,19 +66,19 @@
 					</ul>
 				</li>
 			</ul>
-				<div class="pcoded-navigation-label">Gerer les factures</div>
+				<div class="pcoded-navigation-label">Gerer les Commandes</div>
 			<ul class="pcoded-item pcoded-left-item">
 				<li class="pcoded-hasmenu">
 					<a href="javascript:void(0)" class="waves-effect waves-dark"> 
 						<span class="pcoded-micon">
 							<i class="feather icon-box"></i>
 						</span> 
-						<span class="pcoded-mtext">Facture</span>
+						<span class="pcoded-mtext">Commandes</span>
 					</a>
 					<ul class="pcoded-submenu">
-						<li class=" "><a href="<c:url value="/?action=facture"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Liste des factures</span>
+						<li class=" "><a href="<c:url value="/?action=commande"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Liste des commandes</span>
 						</a></li>
-						<li class=" "><a href="<c:url value="/?action=addFacture"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Ajouter une facture</span>
+						<li class=" "><a href="<c:url value="/?action=addCommande"/>" class="waves-effect waves-dark"> <span class="pcoded-mtext">Ajouter une commande</span>
 						</a></li>
 					</ul>
 				</li>
