@@ -149,7 +149,7 @@ public class CategorieDao extends HttpServlet {
 	public static void updateCategorie(String idCategorie, String nomCategorie ,String description)throws SQLException {
 		System.out.println("Modification d'une categorie");
 		String UPDATE_CATEGGORIE_SQL = "UPDATE categorie SET nomCategorie='" + nomCategorie
-				+ "',descriprion= '" + description + "' WHERE idCategorie = " + idCategorie + ";";
+				+ "',description= '" + description + "' WHERE idCategorie = " + idCategorie + ";";
 			Connection connection = getConnection();
 			try {
 			PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGGORIE_SQL);

@@ -100,11 +100,17 @@ public class ControllerServlet extends HttpServlet {
 				
 				try {
 					CategorieDao.updateCategorie( idCategorie, nomCategorie, description);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/categorie.jsp").forward(request, response);
+					request.setAttribute("ListCategorie",CategorieDao.findAll());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				// rd = sc.getRequestDispatcher("/WEB-INF/categorie.jsp");
+ catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			rd.forward(request, response);
 		}else if (action.equals("deleteCategorie")) {
